@@ -2,31 +2,26 @@
 
 {% load static %}
 
-{% block content %}
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>PythonBin</title>
+{% block style %}
+  {{ block.super }}
+  <!-- Custom styles for this template -->
+  <style>
+    main > .container {
+      padding: 60px 15px 0;
+    }
+    
+    .footer {
+      background-color: #f5f5f5;
+    }
+    
+    .footer > .container {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  </style>
+{% endblock %}
 
-    {% block style %}
-      {{ block.super }}
-      <!-- Custom styles for this template -->
-      <style>
-        main > .container {
-          padding: 60px 15px 0;
-        }
-        
-        .footer {
-          background-color: #f5f5f5;
-        }
-        
-        .footer > .container {
-          padding-right: 15px;
-          padding-left: 15px;
-        }
-      </style>
-    {% endblock %}
-  </head>
+{% block content %}
 
   {{ block.super }}
   <div class="container">
@@ -40,7 +35,7 @@
     <div class="row">
       <div class="col">
         <p>На данной страницы будут отображаться все созданные сниппеты.</p>
-        <p>Пока тут просто пример, но скоро заменим реальными сниппетами из БД!</p>
+        {% comment %} <p>Пока тут просто пример, но скоро заменим реальными сниппетами из БД!</p> {% endcomment %}
         <hr />
       </div>
     </div>
@@ -56,25 +51,20 @@
             </tr>
           </thead>
           <tbody>
+            {% for snippet in snippets %}
             <tr>
-              <td scope="row">1</td>
+              <td scope="row">{{snippet.id}}</td>
               <td>
-                <a href="/snippets/1">Пример сниппета</a>
+                <a href="/snippets/{{snippet.id}}">{{snippet.name}}</a>
               </td>
-              <td>23.05.2019 11:32</td>
+              <td>{{snippet.creation_date}}</td>
             </tr>
 
-            <tr>
-              <td scope="row">2</td>
-              <td>
-                <a href="/snippets/2">И ещё один пример</a>
-              </td>
-              <td>23.05.2019 11:34</td>
-            </tr>
+            {% endfor %}
           </tbody>
         </table>
         <div align="right">
-          <i style="color: gray">Всего сниппетов: 2</i>
+          <i style="color: gray">Всего сниппетов: {{snippets_count}}</i>
         </div>
       </div>
     </div>
