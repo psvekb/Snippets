@@ -1,0 +1,12 @@
+[
+{
+    "model": "MainApp.snippet",
+    "pk": 1,
+    "fields": {
+        "name": "Hello world Snippet",
+        "lang": "py",
+        "code": "print(\"Hello world\")",
+        "creation_date": "2024-12-15T12:43:56.230Z"
+    }
+}
+]

@@ -55,9 +55,9 @@
             <tr>
               <td scope="row">{{snippet.id}}</td>
               <td>
-                <a href="/snippets/{{snippet.id}}">{{snippet.name}}</a>
+                <a href="/snippet/{{snippet.id}}">{{snippet.name}}</a>
               </td>
-              <td>{{snippet.creation_date}}</td>
+              <td>{{snippet.creation_date | date:"Y-m-d"}}</td>
             </tr>
 
             {% endfor %}
