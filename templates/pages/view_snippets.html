@@ -3,70 +3,70 @@
 {% load static %}
 
 {% block style %}
-  {{ block.super }}
-  <!-- Custom styles for this template -->
-  <style>
-    main > .container {
-      padding: 60px 15px 0;
-    }
-    
-    .footer {
-      background-color: #f5f5f5;
-    }
-    
-    .footer > .container {
-      padding-right: 15px;
-      padding-left: 15px;
-    }
-  </style>
+{{ block.super }}
+<!-- Custom styles for this template -->
+<style>
+  main>.container {
+    padding: 60px 15px 0;
+  }
+
+  .footer {
+    background-color: #f5f5f5;
+  }
+
+  .footer>.container {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+</style>
 {% endblock %}
 
 {% block content %}
 
-  {{ block.super }}
-  <div class="container">
-    <div class="row">
-      <div class="col text-center">
-        <h1>{{ pagename }}</h1>
-        <hr />
-      </div>
+{{ block.super }}
+<div class="container">
+  <div class="row">
+    <div class="col text-center">
+      <h1>{{ pagename }}</h1>
+      <hr />
     </div>
+  </div>
 
-    <div class="row">
-      <div class="col">
-        <p>На данной страницы будут отображаться все созданные сниппеты.</p>
-        {% comment %} <p>Пока тут просто пример, но скоро заменим реальными сниппетами из БД!</p> {% endcomment %}
-        <hr />
-      </div>
+  <div class="row">
+    <div class="col">
+      <p>На данной страницы будут отображаться все созданные сниппеты.</p>
+      {% comment %} <p>Пока тут просто пример, но скоро заменим реальными сниппетами из БД!</p> {% endcomment %}
+      <hr />
     </div>
+  </div>
 
-    <div class="row">
-      <div class="col">
-        <table class="table table-striped">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Название</th>
-              <th scope="col">Дата создания</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for snippet in snippets %}
-            <tr>
-              <td scope="row">{{snippet.id}}</td>
-              <td>
-                <a href="/snippet/{{snippet.id}}">{{snippet.name}}</a>
-              </td>
-              <td>{{snippet.creation_date | date:"Y-m-d"}}</td>
-            </tr>
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Название</th>
+            <th scope="col">Дата создания</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for snippet in snippets %}
+          <tr>
+            <td scope="row">{{snippet.id}}</td>
+            <td>
+              <a href="{% url 'snippet' snippet.id %}">{{snippet.name}}</a>
+            </td>
+            <td>{{snippet.creation_date | date:"Y-m-d"}}</td>
+          </tr>
 
-            {% endfor %}
-          </tbody>
-        </table>
-        <div align="right">
-          <i style="color: gray">Всего сниппетов: {{snippets_count}}</i>
-        </div>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div align="right">
+        <i style="color: gray">Всего сниппетов: {{snippets_count}}</i>
       </div>
     </div>
   </div>
+</div>
 {% endblock %}

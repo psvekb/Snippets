@@ -3,48 +3,48 @@
 {% load static %}
 
 {% block style %}
-  {{ block.super }}
-  <!-- Custom styles for this template -->
+{{ block.super }}
+<!-- Custom styles for this template -->
 {% endblock %}
 
 {% block content %}
-  {{ block.super }}
-  <div class="container">
-    <div class="row">
-      <div class="col text-center">
-        <h1>{{ pagename }} {{ snippet.id }}</h1>
-        <hr />
-      </div>
-    </div>
-
-    {% comment %} <div class="row">
-      <div class="col">
-        <p>Cниппет {{ snippet.id }}.</p>
-        <hr />
-      </div>
-    </div> {% endcomment %}
-
-    <div class="row">
-      <div class="col">
-        <fieldset disabled>
-          <div class="row disabled">
-            <div class="col col-8">
-              Название:<input type="text" value={{snippet.name}} class="form-control" />
-            </div>
-            <div class="col col-4">
-              Дата создания:<input type="text" value={{snippet.creation_date | date:"Y-m-d"}} class="form-control" />
-            </div>
-          </div>
-          <hr />
-          <div class="row">
-            <div class="col">
-              <div class="p-2 h-100" style="border:1px solid #ced4da;border-radius:5px;">
-                <p>{{snippet.code}}</p>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-      </div>
+{{ block.super }}
+<div class="container">
+  <div class="row">
+    <div class="col text-center">
+      <h1>{{ pagename }} {{ snippet.id }}</h1>
+      <hr />
     </div>
   </div>
+
+  {% comment %} <div class="row">
+    <div class="col">
+      <p>Cниппет {{ snippet.id }}.</p>
+      <hr />
+    </div>
+  </div> {% endcomment %}
+
+  <div class="row">
+    <div class="col">
+      <fieldset disabled>
+        <div class="row disabled">
+          <div class="col col-8">
+            Название:<input type="text" value='{{snippet.name}}' class="form-control" />
+          </div>
+          <div class="col col-4">
+            Дата создания:<input type="text" value='{{ snippet.creation_date | date:"Y-m-d" }}' class="form-control" />
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col">
+            <div class="p-2 h-100" style="border:1px solid #ced4da;border-radius:5px;">
+              <p>{{snippet.code}}</p>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+</div>
 {% endblock %}

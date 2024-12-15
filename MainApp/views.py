@@ -1,7 +1,8 @@
-from django.http import Http404
+from django.http import Http404, HttpResponseNotFound,HttpResponse
 from django.shortcuts import render, redirect
 from .models import Snippet
-from MainApp.forms import SnippetForm
+from .forms import SnippetForm
+from django.core.exceptions import ObjectDoesNotExist
 
 def index_page(request):
     context = {'pagename': 'PythonBin'}
@@ -9,7 +10,8 @@ def index_page(request):
 
 
 def add_snippet_page(request):
-    context = {'pagename': 'Добавление нового сниппета'}
+    form = SnippetForm()
+    context = {'pagename': 'Добавление нового сниппета', 'form': form}
     return render(request, 'pages/add_snippet.html', context)
 
 
@@ -23,21 +25,20 @@ def snippet(request, id):
         
         # colors = item.colors.all()
         # print(f'{colors=}')
-    except:
-        return Http404(f'Сниппет c {id = } не найден')
-    
-    print(snippet)    
-    context = {'pagename': 'Сниппет', 'snippet' : snippet}
-    return render(request, 'pages/snippet.html', context)
-
-def add_snippet_page(request):
-    form = SnippetForm()
-    return render(request, 'add_snippet.html', {'form': form})
+    except ObjectDoesNotExist:
+        return HttpResponseNotFound(f'Сниппет c {id = } не найден')
+    else:
+        print(snippet)    
+        context = {'pagename': 'Сниппет', 'snippet' : snippet}
+        return render(request, 'pages/snippet.html', context)
 
 def create_snippet(request):
+    from pprint import pprint
     if request.method == "POST":
+        pprint(request.POST)
         form = SnippetForm(request.POST)
-    if form.is_valid():
-        form.save()
-        return redirect("redirect_url")
-    return render(request,'add_snippet.html',{'form': form})    
+        return HttpResponse("Done")
+    # if form.is_valid():
+    #     form.save()
+    #     return redirect("redirect_url")
+    # return render(request,'pages/add_snippet.html',{'form': form})    
