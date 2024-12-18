@@ -37,8 +37,7 @@ def create_snippet(request):
     if request.method == "POST":
         pprint(request.POST)
         form = SnippetForm(request.POST)
-        return HttpResponse("Done")
-    # if form.is_valid():
-    #     form.save()
-    #     return redirect("redirect_url")
-    # return render(request,'pages/add_snippet.html',{'form': form})    
+        if form.is_valid():
+            form.save()
+        return redirect("list_snippets")
+    return render(request,'pages/add_snippet.html',{'form': form})    
