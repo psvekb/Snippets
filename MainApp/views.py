@@ -10,10 +10,16 @@ def index_page(request):
 
 
 def add_snippet_page(request):
-    form = SnippetForm()
-    context = {'pagename': 'Добавление нового сниппета', 'form': form}
-    return render(request, 'pages/add_snippet.html', context)
-
+    if request.method == 'GET':
+        form = SnippetForm()
+        context = {'pagename': 'Добавление нового сниппета', 'form': form}
+        return render(request, 'pages/add_snippet.html', context)
+    if request.method == "POST":
+        form = SnippetForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect("list_snippets")
+    return render(request,'pages/add_snippet.html',{'form': form})  
 
 def snippets_page(request):
     context = {'pagename': 'Просмотр сниппетов', 'snippets' : Snippet.objects.all(), 'snippets_count':Snippet.objects.count()}
@@ -32,12 +38,12 @@ def snippet(request, id):
         context = {'pagename': 'Сниппет', 'snippet' : snippet}
         return render(request, 'pages/snippet.html', context)
 
-def create_snippet(request):
-    from pprint import pprint
-    if request.method == "POST":
-        pprint(request.POST)
-        form = SnippetForm(request.POST)
-        if form.is_valid():
-            form.save()
-        return redirect("list_snippets")
-    return render(request,'pages/add_snippet.html',{'form': form})    
+# def create_snippet(request):
+#     from pprint import pprint
+#     if request.method == "POST":
+#         pprint(request.POST)
+#         form = SnippetForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#         return redirect("list_snippets")
+#     return render(request,'pages/add_snippet.html',{'form': form})    

@@ -8,5 +8,25 @@
         "code": "print(\"Hello world\")",
         "creation_date": "2024-12-15T12:43:56.230Z"
     }
+},
+{
+    "model": "MainApp.snippet",
+    "pk": 2,
+    "fields": {
+        "name": "second",
+        "lang": "C++",
+        "code": "test( second)",
+        "creation_date": "2024-12-21T13:43:01.660Z"
+    }
+},
+{
+    "model": "MainApp.snippet",
+    "pk": 3,
+    "fields": {
+        "name": "third",
+        "lang": "js",
+        "code": "print-js",
+        "creation_date": "2024-12-21T14:06:25.421Z"
+    }
 }
 ]
