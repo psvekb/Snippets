@@ -31,9 +31,9 @@ def snippet(request, id):
     except ObjectDoesNotExist:
         return HttpResponseNotFound(f'Сниппет c {id = } не найден')
     else:
-        print(snippet)    
         context = {'pagename': 'Сниппет', 'snippet' : snippet, 'type':'view'}
         return render(request, 'pages/snippet.html', context)
+
 
 def snippet_delete(request, id:int):
     if request.method == "POST":
@@ -42,4 +42,20 @@ def snippet_delete(request, id:int):
     return redirect('list_snippets')
 
 def snippet_edit(request, id:int):
-    pass
+    try:
+        snippet = Snippet.objects.get(id = id)
+    except ObjectDoesNotExist:
+        return HttpResponseNotFound(f'Сниппет c {id = } не найден')
+    else:
+        if request.method == 'GET':
+            context = {'pagename': 'Сниппет', 'snippet' : snippet, 'type':'edit'}
+            return render(request, 'pages/snippet.html', context)
+        
+        if request.method == 'POST':
+            data_form = request.POST
+            snippet.name = data_form['name']
+            # snippet.lang = data_form['lang']
+            snippet.creation_date = data_form['creation_date']
+            snippet.code = data_form['code']
+            snippet.save()
+            return redirect('list_snippets')

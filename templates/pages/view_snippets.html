@@ -56,6 +56,9 @@
             <td scope="row">{{snippet.id}}</td>
             <td>
               <a href="{% url 'snippet' snippet.id %}">{{snippet.name}}</a>
+              <a href="{% url 'snippet_edit' snippet.id %}">
+                  <i class='fas fa-edit'></i>
+              </a>
             </td>
             <td>{{snippet.creation_date | date:"Y-m-d"}}</td>
             <td> 
