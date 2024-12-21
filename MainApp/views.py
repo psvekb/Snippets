@@ -28,22 +28,18 @@ def snippets_page(request):
 def snippet(request, id):
     try:
         snippet = Snippet.objects.get(id = id)
-        
-        # colors = item.colors.all()
-        # print(f'{colors=}')
     except ObjectDoesNotExist:
         return HttpResponseNotFound(f'Сниппет c {id = } не найден')
     else:
         print(snippet)    
-        context = {'pagename': 'Сниппет', 'snippet' : snippet}
+        context = {'pagename': 'Сниппет', 'snippet' : snippet, 'type':'view'}
         return render(request, 'pages/snippet.html', context)
 
-# def create_snippet(request):
-#     from pprint import pprint
-#     if request.method == "POST":
-#         pprint(request.POST)
-#         form = SnippetForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#         return redirect("list_snippets")
-#     return render(request,'pages/add_snippet.html',{'form': form})    
+def snippet_delete(request, id:int):
+    if request.method == "POST":
+        snippet =Snippet.objects.get (id=id) # Snippet.objects.get(id = id)
+        snippet.delete()
+    return redirect('list_snippets')
+
+def snippet_edit(request, id:int):
+    pass

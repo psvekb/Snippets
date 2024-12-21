@@ -58,6 +58,12 @@
               <a href="{% url 'snippet' snippet.id %}">{{snippet.name}}</a>
             </td>
             <td>{{snippet.creation_date | date:"Y-m-d"}}</td>
+            <td> 
+              <form action="{%url 'snippet_delete' snippet.id %}" method='POST'>
+                {% csrf_token %}
+                <button type='submit' class='btn btn-danger'>Delete</button>
+              </form> 
+            </td>
           </tr>
 
           {% endfor %}
