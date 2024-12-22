@@ -18,13 +18,15 @@
         </ul>
       </div>
     </div>
+    {% if request.user.is_authenticated %}
+       <span style="color:white"> Welcome {{request.user.username}} </span> &nbsp;&nbsp; 
+       <a href='{% url "logout" %}'>logout</a> 
+    {% else %}
+      <form method="post" action="{% url "login" %}">{% csrf_token %}
+        <input name="username" type="text" placeholder="username">
+        <input name="password" type="password" placeholder="password">
+        <button type="submit">login</button>
+      </form>
+    {% endif %}
   </nav>
-  {% comment %} <div class="container">
-    <div class="row">
-      <div class="col text-center">
-        <h1>{{ pagename }}</h1>
-        <hr />
-      </div>
-    </div>
-  </div> {% endcomment %}
 </header>

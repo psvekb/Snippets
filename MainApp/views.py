@@ -3,10 +3,30 @@ from django.shortcuts import render, redirect
 from .models import Snippet
 from .forms import SnippetForm
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import auth
 
 def index_page(request):
     context = {'pagename': 'PythonBin'}
     return render(request, 'pages/index.html', context)
+
+def login(request):
+    if request.method == 'POST':
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        print("username =", username)
+        print("password =", password)
+        user = auth.authenticate(request, username=username,
+        password=password)
+        if user is not None:
+            auth.login(request, user)
+        else:
+        # Return error message
+           pass
+    return redirect('index')
+
+def logout(request):
+    auth.logout(request)
+    return redirect('index')
 
 
 def add_snippet_page(request):
