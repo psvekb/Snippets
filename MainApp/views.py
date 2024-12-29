@@ -4,6 +4,7 @@ from .models import Snippet
 from .forms import SnippetForm
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import auth
+from django.db.models import Q
 
 def index_page(request):
     context = {'pagename': 'PythonBin'}
@@ -29,6 +30,8 @@ def logout(request):
     return redirect('index')
 
 
+     
+
 def add_snippet_page(request):
     if request.method == 'GET':
         form = SnippetForm()
@@ -41,11 +44,18 @@ def add_snippet_page(request):
             if request.user.is_authenticated:
                 snippet.user = request.user
                 snippet.save()
-            return redirect("list_snippets")
+            return redirect("snippets_list")
         return render(request,'pages/add_snippet.html',{'form': form})  
 
 def snippets_page(request):
-    context = {'pagename': 'Просмотр сниппетов', 'snippets' : Snippet.objects.all(), 'snippets_count':Snippet.objects.count()}
+    print( request.path)
+    print( request.user.id)
+    if request.path == '/snippets/list/my':
+        snippets = Snippet.objects.all().filter(user_id=request.user.id)
+    else:
+        snippets = Snippet.objects.all().exclude(~Q(user_id=request.user.id), private=True)
+    snippets_count= snippets.count()
+    context = {'pagename': 'Просмотр сниппетов', 'snippets' : snippets, 'snippets_count':snippets_count}
     return render(request, 'pages/view_snippets.html', context)
 
 def snippet(request, id):
@@ -62,7 +72,7 @@ def snippet_delete(request, id:int):
     if request.method == "POST":
         snippet =Snippet.objects.get (id=id) # Snippet.objects.get(id = id)
         snippet.delete()
-    return redirect('list_snippets')
+    return redirect('snippets_list')
 
 def snippet_edit(request, id:int):
     try:
@@ -76,9 +86,11 @@ def snippet_edit(request, id:int):
         
         if request.method == 'POST':
             data_form = request.POST
+            print(f'{data_form=}')
             snippet.name = data_form['name']
             # snippet.lang = data_form['lang']
             snippet.creation_date = data_form['creation_date']
             snippet.code = data_form['code']
+            snippet.private = data_form['private']
             snippet.save()
-            return redirect('list_snippets')
+            return redirect('snippets_list')

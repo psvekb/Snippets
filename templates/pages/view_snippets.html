@@ -69,7 +69,9 @@
                 <button type='submit' class='btn btn-danger'>Delete</button>
               </form> 
             </td>
-            <td>{{snippet.user.username}}</td>
+            <td>{{snippet.user.username}}
+                  {% if snippet.private %}   <i class="fa-solid fa-lock"></i>{% endif %}
+            </td>
           </tr>
 
           {% endfor %}

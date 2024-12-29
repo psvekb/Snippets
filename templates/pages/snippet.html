@@ -29,11 +29,14 @@
       {% if type == 'view' %}
         <fieldset disabled>
           <div class="row disabled">
-            <div class="col col-8">
+            <div class="col col-7">
               Название:<input type="text" value='{{snippet.name}}' class="form-control" />
             </div>
-            <div class="col col-4">
+            <div class="col col-3">
               Дата создания:<input type="text" value='{{ snippet.creation_date | date:"Y-m-d" }}' class="form-control" />
+            </div>
+            <div class="col col-2">
+              Приватный:<input type="checkbox" value='{{ snippet.private }}' class="form-control" />
             </div>
           </div>
           <hr />
@@ -44,15 +47,19 @@
               </div>
             </div>
           </div>
+
         </fieldset>
       {% else %}
         <form action='' method='POST'>  {% csrf_token %} 
           <div class="row">
-            <div class="col col-8">
+            <div class="col col-7">
               Название:<input type="text" name='name' value='{{snippet.name}}' class="form-control" />
             </div>
-            <div class="col col-4">
+            <div class="col col-3">
               Дата создания:<input type="text" name='creation_date' value='{{ snippet.creation_date | date:"Y-m-d" }}' class="form-control" />
+            </div>
+            <div class="col col-2">
+              Приватный:<input type="checkbox" name='private' value='{{ snippet.private }}' class="form-control" />
             </div>
           </div>
           <hr />
