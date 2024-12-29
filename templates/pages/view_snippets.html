@@ -58,16 +58,20 @@
             <td scope="row">{{snippet.id}}</td>
             <td>
               <a href="{% url 'snippet' snippet.id %}">{{snippet.name}}</a>
-              <a href="{% url 'snippet_edit' snippet.id %}">
+              {% if snippet.user_id == request.user.id %}
+                <a href="{% url 'snippet_edit' snippet.id %}">
                   <i class='fas fa-edit'></i>
-              </a>
+                </a>
+              {% endif %}
             </td>
             <td>{{snippet.creation_date | date:"Y-m-d"}}</td>
             <td> 
-              <form action="{%url 'snippet_delete' snippet.id %}" method='POST'>
-                {% csrf_token %}
-                <button type='submit' class='btn btn-danger'>Delete</button>
-              </form> 
+              {% if snippet.user_id == request.user.id %}
+                <form action="{%url 'snippet_delete' snippet.id %}" method='POST'>
+                  {% csrf_token %}
+                  <button type='submit' class='btn btn-danger'>Delete</button>
+                </form> 
+              {% endif %}
             </td>
             <td>{{snippet.user.username}}
                   {% if snippet.private %}   <i class="fa-solid fa-lock"></i>{% endif %}
